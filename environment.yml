@@ -1,0 +1,21 @@
+name: myenv
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - pandas
+  - numpy
+  - requests
+  - beautifulsoup4
+  - python-dotenv
+  - sqlalchemy
+  - plotly
+  - jupyter
+  - fredapi
+  - pip:
+    - openai
+    - langchain
+    - pandas-datareader
+    - streamlit 
