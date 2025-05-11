@@ -15,6 +15,10 @@ FRED_SERIES = {
     'CPIAUCSL': 'CPIAUCSL',         # 消费者价格指数
     'FEDFUNDS': 'FEDFUNDS',         # 联邦基金利率
     'M2': 'M2',                     # M2货币供应量
+    'DGS10': 'DGS10',               # 10年期国债收益率
+    'DGS3MO': 'DGS3MO',             # 3个月期国债收益率
+    'PCE': 'PCE',                   # 个人消费支出
+    'PCEPI': 'PCEPI',               # 个人消费支出价格指数
 }
 
 # 数据存储配置

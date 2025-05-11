@@ -29,4 +29,7 @@ wheels/
 .idea/
 .vscode/
 *.swp
-*.swo 
+*.swo
+
+# 忽略SQLite数据库文件
+*.db 
