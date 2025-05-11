@@ -56,9 +56,11 @@ if __name__ == '__main__':
     for _ in range(5):
         try:
             xhs_client = XhsClient(cookie, sign=sign)
-            note = xhs_client.get_note_by_id(note_id="681deaed000000002200777e",xsec="AB7go17vApNBtz2hFPi6cTKF18YXX78nUFQ-UQa_FiSfE=")
+            # note = xhs_client.get_note_by_id(note_id="681deaed000000002200777e",xsec="AB7go17vApNBtz2hFPi6cTKF18YXX78nUFQ-UQa_FiSfE=")
+            note2 = __get_note_with_id(xhs_client,note_id="681deaed000000002200777e",xsec="AB7go17vApNBtz2hFPi6cTKF18YXX78nUFQ-UQa_FiSfE=")
             # print(json.dumps(note, indent=4))
-            print(help.get_imgs_url_from_note(note))
+            # print(help.get_imgs_url_from_note(note))
+            print(json.dumps(note2, indent=4))
             break
         except DataFetchError as e:
             print(e)
