@@ -38,6 +38,23 @@ def __get_note_with_id(xhs_client: XhsClient, note_id: str, xsec: str):
     res = xhs_client.post(uri, data=data)
     return res["items"][0]["note_card"]
 
+def beauty_print(data: dict):
+    print(json.dumps(data, ensure_ascii=False, indent=2))
+
+def test_create_simple_note(xhs_client: XhsClient):
+    title = "RedNote AutoPublish Test"
+    desc = "Test note for RedNote AutoPublish \n 1. Say Some Words \n 2. Thank You"
+    images = [
+        "/Users/rain/CursorProject/finance2media/data/images/demo_image.jpg",
+    ]
+    # get current time str
+    current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    note = xhs_client.create_image_note(title, desc, images, is_private=False, post_time=current_time)
+    beauty_print(note)
+
+
+
+
 if __name__ == '__main__':
     # 从环境变量获取 cookie
     load_dotenv()
@@ -45,7 +62,7 @@ if __name__ == '__main__':
     
     # 确保 cookie 格式正确
     if cookie:
-        cookie = f'a1="191829f884a96q7kipie52sdoln1o9pfui8ifl9bx30000415580"; webId="c946b16471dcbca3bd0703e9f13a4397"; web_session="04006979dbb94aa5de378333b9354bbcf2bb38"'
+        cookie = f'a1="191829f884a96q7kipie52sdoln1o9pfui8ifl9bx30000415580"; webId="c946b16471dcbca3bd0703e9f13a4397"; web_session="04006979dbb94aa5de37fefc153a4b730e68e6"'
         
     else:
         raise ValueError("XHS_COOKIE not found in environment variables")
@@ -57,10 +74,11 @@ if __name__ == '__main__':
         try:
             xhs_client = XhsClient(cookie, sign=sign)
             # note = xhs_client.get_note_by_id(note_id="681deaed000000002200777e",xsec="AB7go17vApNBtz2hFPi6cTKF18YXX78nUFQ-UQa_FiSfE=")
-            note2 = __get_note_with_id(xhs_client,note_id="681deaed000000002200777e",xsec="AB7go17vApNBtz2hFPi6cTKF18YXX78nUFQ-UQa_FiSfE=")
+            # note2 = __get_note_with_id(xhs_client,note_id="681deaed000000002200777e",xsec="AB7go17vApNBtz2hFPi6cTKF18YXX78nUFQ-UQa_FiSfE=")
             # print(json.dumps(note, indent=4))
             # print(help.get_imgs_url_from_note(note))
-            print(json.dumps(note2, indent=4))
+            # print(json.dumps(note2, indent=4))
+            test_create_simple_note(xhs_client)
             break
         except DataFetchError as e:
             print(e)
