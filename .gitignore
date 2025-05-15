@@ -32,4 +32,14 @@ wheels/
 *.swo
 
 # 忽略SQLite数据库文件
-*.db 
+*.db
+
+# 忽略图片和视频文件
+*.jpg
+*.mov
+*.png
+*.gif
+*.mp4
+*.avi
+*.mkv
+*.wmv 
