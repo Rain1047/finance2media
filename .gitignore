@@ -42,4 +42,21 @@ wheels/
 *.mp4
 *.avi
 *.mkv
-*.wmv 
+*.wmv
+
+# Gradio
+.gradio/
+
+# Python
+finance2media.egg-info/
+
+# 模型和数据
+models/
+data/
+output/
+
+# 测试缓存
+.pytest_cache/
+
+# macOS
+.DS_Store 

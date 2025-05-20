@@ -1,0 +1,32 @@
+{
+    "name": "小红书帖子模板",
+    "description": "标准的小红书帖子模板",
+    "content": {
+        "title": "{title}",
+        "content": "{content}",
+        "tags": "{tags}",
+        "images": "{images}"
+    },
+    "parameters": {
+        "title": {
+            "type": "string",
+            "description": "帖子标题",
+            "max_length": 30
+        },
+        "content": {
+            "type": "string",
+            "description": "帖子正文内容",
+            "max_length": 1000
+        },
+        "tags": {
+            "type": "array",
+            "description": "帖子标签",
+            "max_items": 10
+        },
+        "images": {
+            "type": "array",
+            "description": "帖子图片",
+            "max_items": 9
+        }
+    }
+} 

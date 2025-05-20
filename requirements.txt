@@ -1,0 +1,18 @@
+# 基础依赖
+numpy>=1.21.0
+soundfile>=0.10.3
+pyaudio>=0.2.11
+pygame>=2.1.2
+python-dotenv>=0.19.0
+tqdm>=4.62.3
+
+# 后续添加其他依赖
+# ASR 相关
+# openai-whisper>=20231117
+
+# LLM 相关
+# langchain>=0.0.267
+# llama-cpp-python>=0.2.6
+
+# TTS 相关
+# pyttsx3>=2.90 

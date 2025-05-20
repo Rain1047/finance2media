@@ -1,0 +1,25 @@
+{
+    "wake_words": ["你好小助手", "嗨小助手"],
+    "stop_words": ["再见", "停止"],
+    "max_idle_time": 60,
+    
+    "asr_config": {
+        "model_size": "base",
+        "language": "zh",
+        "device": "cpu"
+    },
+    
+    "llm_config": {
+        "model_path": "models/chatglm-cpp.bin",
+        "max_history": 10,
+        "temperature": 0.7,
+        "max_tokens": 256
+    },
+    
+    "tts_config": {
+        "model_name": "fastspeech2_baker",
+        "voice_type": "female",
+        "speed": 1.0,
+        "volume": 1.0
+    }
+} 

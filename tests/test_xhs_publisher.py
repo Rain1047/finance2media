@@ -4,6 +4,16 @@ from datetime import datetime
 from src.publishers.media_publisher import XhsPublisher
 from playwright.sync_api import sync_playwright, TimeoutError
 import time
+from crewai import Agent, Task, Crew, Process
+from tools.file_tools import FileTool
+from tools.web_tools import WebScraperTool, ScriptGeneratorTool
+from tools.content_tools import ContentPlannerTool
+from tools.scraper_tools import ScraperGeneratorTool
+from tools.media_tools import MediaProcessorTool
+from tools.resource_tools import ResourceClassifierTool
+from tools.publish_tools import XhsPublisherTool, WeiboPublisherTool, TiktokPublisherTool, PublishSchedulerTool
+from tools.monitor_tools import DataCollectorTool, InteractionAnalyzerTool, FeedbackCollectorTool, PerformanceReportTool
+from langchain.tools import Tool
 
 def beauty_print(data):
     import json
@@ -293,4 +303,192 @@ if __name__ == "__main__":
     )
 
 if __name__ == '__main__':
-    pytest.main(['-v', 'test_xhs_publisher.py']) 
+    pytest.main(['-v', 'test_xhs_publisher.py'])
+
+content_agent = Agent(
+    name="ContentCreator",
+    goal="创建高质量多模态内容，自动获取所需资源",
+    backstory="我是一位多才多艺的内容创作者，擅长整合多种资源，创造引人入胜的内容",
+    verbose=True,
+    allow_delegation=True,
+    tools=[
+        FileTool(),  # 文件操作工具
+        WebScraperTool(),  # 网页抓取
+        ScriptGeneratorTool(),  # 脚本生成
+        ContentPlannerTool(),  # 内容规划
+    ]
+)
+
+resource_agent = Agent(
+    name="ResourceManager",
+    goal="收集、处理和优化内容所需的各类资源",
+    backstory="我专注于发现和优化各类数字资源，是内容创作的供应商",
+    verbose=True,
+    allow_delegation=True,
+    tools=[
+        ScraperGeneratorTool(),  # 爬虫生成
+        MediaProcessorTool(),  # 媒体处理
+        ResourceClassifierTool()  # 资源分类
+    ]
+)
+
+publishing_agent = Agent(
+    name="Publisher",
+    goal="将内容有效地发布到各平台，确保最大曝光和影响力",
+    backstory="我精通各大内容平台的发布机制，擅长优化发布策略以获得最佳效果",
+    verbose=True,
+    tools=[
+        XhsPublisherTool(),  # 小红书发布
+        WeiboPublisherTool(),  # 微博发布(预留)
+        TiktokPublisherTool(),  # 抖音发布(预留)
+        PublishSchedulerTool()  # 发布调度
+    ]
+)
+
+monitoring_agent = Agent(
+    name="PerformanceMonitor",
+    goal="监控内容表现，提供基于数据的优化建议",
+    backstory="我擅长数据分析和洞察，能从用户反馈中发掘有价值的信息",
+    verbose=True,
+    tools=[
+        DataCollectorTool(),  # 数据收集
+        InteractionAnalyzerTool(),  # 互动分析
+        FeedbackCollectorTool(),  # 反馈收集
+        PerformanceReportTool()  # 表现报告
+    ]
+)
+
+# 创建协作团队
+content_crew = Crew(
+    agents=[content_agent, resource_agent, publishing_agent, monitoring_agent],
+    tasks=[
+        Task(
+            description="规划并创建一份关于[主题]的完整内容",
+            expected_output="完整的内容包，包含文本、图片和视频素材",
+            agent=content_agent
+        ),
+        Task(
+            description="收集并处理所需的各类资源",
+            expected_output="优化后的资源文件集",
+            agent=resource_agent
+        ),
+        Task(
+            description="将内容发布到小红书平台",
+            expected_output="发布成功确认和链接",
+            agent=publishing_agent
+        ),
+        Task(
+            description="监控内容表现并提供优化建议",
+            expected_output="表现报告和优化方案",
+            agent=monitoring_agent
+        )
+    ],
+    process=Process.sequential  # 可选择并行(parallel)或顺序(sequential)
+)
+
+# 启动团队工作
+result = content_crew.kickoff()
+
+def iterative_content_process(topic, iterations=3):
+    for i in range(iterations):
+        # 创建内容
+        content_task = Task(
+            description=f"创建第{i+1}版关于{topic}的内容",
+            agent=content_agent
+        )
+        content_result = content_agent.execute_task(content_task)
+        
+        # 发布内容
+        publish_task = Task(
+            description=f"发布第{i+1}版内容到小红书",
+            agent=publishing_agent,
+            context={"content": content_result}
+        )
+        publish_result = publishing_agent.execute_task(publish_task)
+        
+        # 监控表现
+        monitor_task = Task(
+            description=f"监控第{i+1}版内容表现",
+            agent=monitoring_agent,
+            context={"publish_info": publish_result}
+        )
+        feedback = monitoring_agent.execute_task(monitor_task)
+        
+        # 基于反馈优化下一轮内容
+        if i < iterations - 1:
+            content_agent.update_context({"feedback": feedback})
+    
+    return "内容迭代完成"
+
+def WebScraperTool():
+    def scrape_website(url, data_type="text,images", depth=1):
+        """
+        从指定网站抓取资源
+        params:
+            url: 网站URL
+            data_type: 要抓取的数据类型，如'text,images,videos'
+            depth: 抓取深度
+        """
+        # 实现代码...
+        return {"text": [...], "images": [...], "videos": [...]}
+    
+    return Tool(
+        name="WebScraper",
+        description="从网站抓取指定类型的资源",
+        func=scrape_website
+    )
+
+def ScriptGeneratorTool():
+    def generate_scraper_script(target_site, data_needs):
+        """
+        自动生成爬虫脚本
+        params:
+            target_site: 目标网站
+            data_needs: 数据需求描述
+        """
+        # 实现代码...
+        return "# 生成的Python爬虫脚本\nimport requests\n..."
+    
+    return Tool(
+        name="ScriptGenerator",
+        description="根据需求自动生成爬虫脚本",
+        func=generate_scraper_script
+    )
+
+def XhsPublisherTool():
+    def publish_to_xhs(content_package, schedule_time=None):
+        """
+        发布内容到小红书
+        params:
+            content_package: 内容包(文本、图片等)
+            schedule_time: 计划发布时间
+        """
+        # 实现代码...
+        from src.publishers.media_publisher import XhsPublisher
+        
+        xhs_publisher = XhsPublisher(cookie=get_cookie())
+        result = xhs_publisher.create_image_note(
+            title=content_package["title"],
+            desc=content_package["text"],
+            image_paths=content_package["images"],
+            topics=content_package.get("topics", []),
+            is_private=False
+        )
+        return result
+    
+    return Tool(
+        name="XhsPublisher",
+        description="发布内容到小红书平台",
+        func=publish_to_xhs
+    )
+
+def WeiboPublisherTool():
+    def publish_to_weibo(content_package, schedule_time=None):
+        # 实现代码...
+        return result
+    
+    return Tool(
+        name="WeiboPublisher",
+        description="发布内容到微博平台",
+        func=publish_to_weibo
+    )
