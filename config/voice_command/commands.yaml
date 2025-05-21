@@ -1,0 +1,67 @@
+# 语音命令配置文件
+# 此文件定义了可用的命令及其匹配模式
+
+commands:
+  # 文件操作命令
+  create_file:
+    module: "commands.file_commands"
+    class: "CreateFileCommand"
+    patterns:
+      - "创建文件"
+      - "新建文件"
+      - "添加文件"
+      - "生成文件"
+  
+  list_files:
+    module: "commands.file_commands"
+    class: "ListFilesCommand"
+    patterns:
+      - "列出文件"
+      - "显示文件"
+      - "查看文件"
+      - "列出目录"
+      - "显示目录"
+      - "查看目录"
+  
+  delete_file:
+    module: "commands.file_commands"
+    class: "DeleteFileCommand"
+    patterns:
+      - "删除文件"
+      - "移除文件"
+      - "清除文件"
+  
+  # 系统操作命令
+  system_info:
+    module: "commands.system_commands"
+    class: "SystemInfoCommand"
+    patterns:
+      - "系统信息"
+      - "电脑信息"
+      - "查看系统"
+      - "系统状态"
+      - "处理器信息"
+      - "CPU信息"
+      - "内存信息"
+      - "RAM信息"
+  
+  run_shell:
+    module: "commands.system_commands"
+    class: "RunShellCommand"
+    patterns:
+      - "执行命令"
+      - "运行命令"
+      - "shell"
+      - "终端命令"
+  
+  current_directory:
+    module: "commands.system_commands"
+    class: "CurrentDirectoryCommand"
+    patterns:
+      - "当前目录"
+      - "显示目录"
+      - "查看目录"
+      - "当前路径"
+      - "切换目录"
+      - "进入目录"
+      - "改变目录" 

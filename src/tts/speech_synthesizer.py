@@ -4,6 +4,8 @@ import tempfile
 from typing import Dict, Optional, Union
 import threading
 import queue
+import math
+import subprocess
 
 # 尝试导入paddlespeech
 try:
@@ -82,19 +84,42 @@ class SpeechSynthesizer:
             生成的音频文件路径
         """
         if output_file is None:
-            # 生成唯一的输出文件名
-            timestamp = time.strftime("%Y%m%d_%H%M%S")
+            # 生成唯一的输出文件名，添加毫秒级精度
+            timestamp = time.strftime("%Y%m%d_%H%M%S") + f"_{int(time.time() * 1000) % 1000:03d}"
             output_file = os.path.join(self.config["output_dir"], f"tts_{timestamp}.wav")
         
         if self.config["use_mock"]:
             # 模拟TTS生成过程
-            time.sleep(len(text) * 0.05)  # 文本越长，生成时间越长
+            time.sleep(len(text) * 0.01)  # 文本越长，生成时间越长
             
-            # 创建一个空的音频文件
-            with open(output_file, 'wb') as f:
-                f.write(b'\x00' * 44)  # 简单的WAV文件头部
-            
-            print(f"模拟TTS: 已生成文件 {output_file}")
+            # 创建一个有效的WAV文件（44100Hz, 16-bit, mono）
+            try:
+                import wave
+                import struct
+                
+                # 创建有效的WAV文件
+                with wave.open(output_file, 'w') as wf:
+                    wf.setnchannels(1)  # 单声道
+                    wf.setsampwidth(2)  # 2字节 (16-bit)
+                    wf.setframerate(44100)  # 44.1kHz采样率
+                    
+                    # 生成简单的正弦波作为模拟声音
+                    duration = 0.5  # 0.5秒
+                    frequency = 440  # 440 Hz
+                    samples = int(duration * 44100)
+                    
+                    # 生成正弦波
+                    for i in range(samples):
+                        value = int(32767 * 0.3 * math.sin(2 * math.pi * frequency * i / 44100))
+                        data = struct.pack('<h', value)
+                        wf.writeframesraw(data)
+                
+                print(f"模拟TTS: 已生成有效WAV文件 {output_file}")
+            except Exception as e:
+                print(f"模拟TTS生成WAV文件失败: {str(e)}")
+                # 创建空文件作为备用
+                with open(output_file, 'w') as f:
+                    pass
         else:
             # 使用实际模型生成语音
             result = self.model.synthesize(
@@ -144,14 +169,30 @@ class SpeechSynthesizer:
         if not os.path.exists(audio_file):
             print(f"音频文件不存在: {audio_file}")
             return
+        
+        # 检查文件大小，如果是空文件或者太小则跳过播放
+        if os.path.getsize(audio_file) < 100:  # 小于100字节认为是无效文件
+            print(f"音频文件过小或无效: {audio_file}")
+            return
             
         if self.config["use_pygame"] and PYGAME_AVAILABLE:
             # 使用pygame播放
             try:
                 pygame.mixer.music.load(audio_file)
                 pygame.mixer.music.play()
-                while pygame.mixer.music.get_busy():
+                
+                # 等待播放结束，但设置最长等待时间
+                start_time = time.time()
+                timeout = 5.0  # 最长等待5秒
+                
+                while pygame.mixer.music.get_busy() and (time.time() - start_time < timeout):
                     time.sleep(0.1)
+                    
+                # 如果超时但仍在播放，则停止播放
+                if pygame.mixer.music.get_busy():
+                    pygame.mixer.music.stop()
+                    print("播放超时，已强制停止")
+                    
             except Exception as e:
                 print(f"pygame播放失败: {str(e)}")
                 self._play_with_system(audio_file)
@@ -165,14 +206,41 @@ class SpeechSynthesizer:
         system = platform.system()
         
         try:
+            # 检查文件是否有效
+            file_valid = False
+            try:
+                import wave
+                with wave.open(audio_file, 'r') as wf:
+                    if wf.getnframes() > 0:
+                        file_valid = True
+            except Exception:
+                # 如果不是有效的WAV文件，可能是其他音频格式
+                file_valid = os.path.getsize(audio_file) > 1024  # 至少1KB
+            
+            if not file_valid:
+                print(f"跳过播放无效音频文件: {audio_file}")
+                return
+                
+            # 根据不同操作系统使用不同播放命令
+            result = None
             if system == "Darwin":  # macOS
-                os.system(f"afplay {audio_file}")
+                result = subprocess.run(["afplay", audio_file], capture_output=True, text=True, timeout=5)
             elif system == "Linux":
-                os.system(f"aplay {audio_file}")
+                result = subprocess.run(["aplay", audio_file], capture_output=True, text=True, timeout=5)
             elif system == "Windows":
-                os.system(f"start {audio_file}")
+                result = subprocess.run(["start", audio_file], shell=True, capture_output=True, text=True, timeout=5)
             else:
                 print(f"不支持的操作系统: {system}")
+                return
+                
+            # 检查播放结果
+            if result and result.returncode != 0:
+                print(f"系统播放失败，错误代码: {result.returncode}")
+                if result.stderr:
+                    print(f"错误信息: {result.stderr}")
+                    
+        except subprocess.TimeoutExpired:
+            print("系统播放超时")
         except Exception as e:
             print(f"系统播放失败: {str(e)}")
     
