@@ -44,12 +44,13 @@ class FunASRRecognizer:
         """加载模型"""
         if self._model is None:
             try:
+                # 使用 FunASR AutoModel 加载模型
                 self._model = AutoModel(
-                    model=self.model,
-                    model_dir=self.model_dir,
-                    device=self.device,
-                    batch_size=self.batch_size,
-                    hotword=self.hotword
+                    model="paraformer",
+                    vad_model="fsmn-vad",
+                    vad_kwargs={"max_single_segment_time": 30000},
+                    punc_model="ct-punc",
+                    punc_kwargs={},
                 )
             except Exception as e:
                 if self._error_callback:
@@ -89,18 +90,14 @@ class FunASRRecognizer:
             self._load_model()
         
         try:
-            result = self._model.generate(
-                input=audio,
-                cache=self._cache,
-                is_final=is_final,
-                chunk_size=STREAMING_CONFIG['chunk_size'],
-                encoder_chunk_look_back=STREAMING_CONFIG['encoder_chunk_look_back'],
-                decoder_chunk_look_back=STREAMING_CONFIG['decoder_chunk_look_back']
-            )
+            # 执行识别
+            result = self._model.generate(input=audio)
+            
             # 从结果中提取文本
             if isinstance(result, list) and len(result) > 0:
-                return result[0].get('text', '')
-            return ''
+                return result[0].get("text", "")
+            return ""
+            
         except Exception as e:
             if self._error_callback:
                 self._error_callback(f"识别失败: {str(e)}")

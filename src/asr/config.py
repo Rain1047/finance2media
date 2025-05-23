@@ -13,7 +13,7 @@ AUDIO_CONFIG = {
 
 # FunASR 模型配置
 FUNASR_CONFIG = {
-    'model': 'paraformer-zh-streaming',  # 模型名称
+    'model': 'paraformer',    # FunASR基础模型
     'model_dir': 'models/funasr',        # 模型保存目录
     'device': 'cpu',                     # 运行设备
     'batch_size': 1,                     # 批处理大小
@@ -33,6 +33,8 @@ STREAMING_CONFIG = {
     'chunk_size': [0, 10, 5],    # 流式识别的块大小配置
     'encoder_chunk_look_back': 4, # 编码器回看块数
     'decoder_chunk_look_back': 1, # 解码器回看块数
+    'mode': 'online',            # 使用在线模式
+    'hotword_weight': 1.0,       # 热词权重
 }
 
 # 错误处理配置

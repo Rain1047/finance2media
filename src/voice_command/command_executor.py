@@ -272,4 +272,14 @@ class CommandExecutor:
             # 语音反馈
             self._speak(undo_result)
                 
-            return undo_result 
+            return undo_result
+    
+    def execute_command(self, text):
+        """
+        兼容GUI调用，执行命令文本
+        参数:
+            text (str): 命令文本
+        返回:
+            str: 执行结果
+        """
+        return self.process_command(text) 

@@ -40,12 +40,27 @@ class AudioCapture:
         self.audio_queue = queue.Queue()
         self.error_callback = None
         
+        # 用于存储之前的音频数据
+        self.prev_audio_buffer = []
+        self.max_prev_audio_size = int(sample_rate * 0.5)  # 最多保存0.5秒的音频
+        
     def _audio_callback(self, in_data, frame_count, time_info, status):
         """音频回调函数"""
         if status:
             if self.error_callback:
                 self.error_callback(f"音频采集错误: {status}")
+        
+        # 将音频数据添加到队列
         self.audio_queue.put(in_data)
+        
+        # 将音频数据添加到之前的音频缓冲区
+        audio_data = np.frombuffer(in_data, dtype=np.int16)
+        self.prev_audio_buffer.extend(audio_data)
+        
+        # 保持缓冲区大小不超过限制
+        if len(self.prev_audio_buffer) > self.max_prev_audio_size:
+            self.prev_audio_buffer = self.prev_audio_buffer[-self.max_prev_audio_size:]
+        
         return (in_data, pyaudio.paContinue)
     
     def start(self, error_callback: Optional[Callable] = None):
@@ -104,6 +119,20 @@ class AudioCapture:
             return np.frombuffer(data, dtype=np.int16)
         except queue.Empty:
             return None
+    
+    def get_previous_audio(self, size: int) -> Optional[np.ndarray]:
+        """
+        获取之前的音频数据
+        
+        Args:
+            size: 要获取的音频数据大小（采样点数）
+            
+        Returns:
+            numpy.ndarray: 之前的音频数据，如果没有足够的数据则返回 None
+        """
+        if len(self.prev_audio_buffer) >= size:
+            return np.array(self.prev_audio_buffer[-size:])
+        return None
     
     def __enter__(self):
         """上下文管理器入口"""

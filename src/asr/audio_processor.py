@@ -1,6 +1,6 @@
 """
-音频预处理模块
-实现音频数据的预处理功能
+音频处理模块
+实现音频预处理功能
 """
 
 import numpy as np
@@ -65,29 +65,20 @@ class AudioProcessor:
             return audio
         return np.mean(audio, axis=1)
     
-    def preprocess(self, 
-                  audio: np.ndarray, 
-                  orig_sr: Optional[int] = None) -> np.ndarray:
+    def preprocess(self, audio: np.ndarray) -> np.ndarray:
         """
-        音频预处理
-        
+        预处理音频数据
         Args:
             audio: 输入音频数据
-            orig_sr: 原始采样率
-            
         Returns:
-            预处理后的音频数据
+            处理后的音频数据
         """
-        # 转换为单声道
-        audio = self.convert_to_mono(audio)
-        
-        # 重采样
-        if orig_sr is not None:
-            audio = self.resample(audio, orig_sr)
-        
-        # 归一化
-        audio = self.normalize(audio)
-        
+        # 确保音频数据是浮点型
+        if audio.dtype != np.float32:
+            audio = audio.astype(np.float32)
+        # 归一化到 [-1, 1] 范围
+        if np.abs(audio).max() > 1.0:
+            audio = audio / 32768.0  # 假设输入是16位整数
         return audio
     
     def split_audio(self, 

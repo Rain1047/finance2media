@@ -1,0 +1,146 @@
+2025-05-23 23:35:54,606 - __main__ - ERROR - 监听过程中出错: main thread is not in main loop
+Traceback (most recent call last):
+  File "/Users/rain/CursorProject/finance2media/examples/gui_voice_command.py", line 195, in _listening_worker
+    self._append_output("系统: 已开启持续监听模式，随时可以说话...\n")
+  File "/Users/rain/CursorProject/finance2media/examples/gui_voice_command.py", line 138, in _append_output
+    self.history_text.config(state=tk.NORMAL)
+  File "/Users/rain/miniconda3/envs/f2m/lib/python3.11/tkinter/__init__.py", line 1721, in configure
+    return self._configure('configure', cnf, kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/rain/miniconda3/envs/f2m/lib/python3.11/tkinter/__init__.py", line 1711, in _configure
+    self.tk.call(_flatten((self._w, cmd)) + self._options(cnf))
+RuntimeError: main thread is not in main loop
+2025-05-23 23:50:01,795 - __main__ - ERROR - 监听过程中出错: 'NoneType' object has no attribute 'process_command'
+Traceback (most recent call last):
+  File "/Users/rain/CursorProject/finance2media/examples/gui_voice_command.py", line 245, in _listening_worker
+    original_callback = self.executor.process_command
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'process_command'
+2025-05-23 23:50:04,851 - __main__ - ERROR - 监听过程中出错: 'NoneType' object has no attribute 'process_command'
+Traceback (most recent call last):
+  File "/Users/rain/CursorProject/finance2media/examples/gui_voice_command.py", line 245, in _listening_worker
+    original_callback = self.executor.process_command
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'process_command'
+2025-05-23 23:50:16,552 - __main__ - ERROR - 监听过程中出错: 'NoneType' object has no attribute 'process_command'
+Traceback (most recent call last):
+  File "/Users/rain/CursorProject/finance2media/examples/gui_voice_command.py", line 245, in _listening_worker
+    original_callback = self.executor.process_command
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'process_command'
+2025-05-23 23:50:18,305 - __main__ - ERROR - 监听过程中出错: 'NoneType' object has no attribute 'process_command'
+Traceback (most recent call last):
+  File "/Users/rain/CursorProject/finance2media/examples/gui_voice_command.py", line 245, in _listening_worker
+    original_callback = self.executor.process_command
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'process_command'
+2025-05-23 23:51:35,786 - __main__ - ERROR - 监听过程中出错: 'NoneType' object has no attribute 'process_command'
+Traceback (most recent call last):
+  File "/Users/rain/CursorProject/finance2media/examples/gui_voice_command.py", line 245, in _listening_worker
+    original_callback = self.executor.process_command
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'process_command'
+2025-05-23 23:52:15,335 - src.voice_command.command_dispatcher - INFO - 已加载命令配置: config/voice_command/commands.yaml
+2025-05-23 23:52:15,343 - src.voice_command.command_dispatcher - INFO - 已加载命令: create_file
+2025-05-23 23:52:15,343 - src.voice_command.command_dispatcher - INFO - 已加载命令: list_files
+2025-05-23 23:52:15,343 - src.voice_command.command_dispatcher - INFO - 已加载命令: delete_file
+2025-05-23 23:52:15,343 - src.voice_command.command_dispatcher - INFO - 已加载命令: system_info
+2025-05-23 23:52:15,343 - src.voice_command.command_dispatcher - INFO - 已加载命令: run_shell
+2025-05-23 23:52:15,343 - src.voice_command.command_dispatcher - INFO - 已加载命令: current_directory
+2025-05-23 23:52:22,429 - src.voice_command.command_dispatcher - INFO - 已加载命令配置: config/voice_command/commands.yaml
+2025-05-23 23:52:22,430 - src.voice_command.command_dispatcher - INFO - 已加载命令: create_file
+2025-05-23 23:52:22,431 - src.voice_command.command_dispatcher - INFO - 已加载命令: list_files
+2025-05-23 23:52:22,431 - src.voice_command.command_dispatcher - INFO - 已加载命令: delete_file
+2025-05-23 23:52:22,431 - src.voice_command.command_dispatcher - INFO - 已加载命令: system_info
+2025-05-23 23:52:22,431 - src.voice_command.command_dispatcher - INFO - 已加载命令: run_shell
+2025-05-23 23:52:22,431 - src.voice_command.command_dispatcher - INFO - 已加载命令: current_directory
+2025-05-23 23:53:24,958 - src.voice_command.command_executor - INFO - 停止监听命令
+2025-05-23 23:53:24,989 - src.voice_command.command_executor - INFO - 停止监听命令
+2025-05-23 23:53:33,259 - src.voice_command.command_executor - INFO - 停止监听命令
+2025-05-23 23:53:33,592 - src.voice_command.command_executor - INFO - 停止监听命令
+2025-05-23 23:53:34,443 - src.voice_command.command_executor - INFO - 停止监听命令
+2025-05-23 23:53:34,820 - src.voice_command.command_executor - INFO - 停止监听命令
+2025-05-23 23:53:36,221 - src.voice_command.command_executor - INFO - 停止监听命令
+2025-05-23 23:53:36,507 - src.voice_command.command_executor - INFO - 停止监听命令
+2025-05-24 00:00:38,541 - src.voice_command.command_dispatcher - INFO - 已加载命令配置: config/voice_command/commands.yaml
+2025-05-24 00:00:38,543 - src.voice_command.command_dispatcher - INFO - 已加载命令: create_file
+2025-05-24 00:00:38,543 - src.voice_command.command_dispatcher - INFO - 已加载命令: list_files
+2025-05-24 00:00:38,543 - src.voice_command.command_dispatcher - INFO - 已加载命令: delete_file
+2025-05-24 00:00:38,543 - src.voice_command.command_dispatcher - INFO - 已加载命令: system_info
+2025-05-24 00:00:38,543 - src.voice_command.command_dispatcher - INFO - 已加载命令: run_shell
+2025-05-24 00:00:38,543 - src.voice_command.command_dispatcher - INFO - 已加载命令: current_directory
+2025-05-24 00:01:24,465 - src.voice_command.command_executor - INFO - 停止监听命令
+2025-05-24 00:01:24,685 - src.voice_command.command_executor - INFO - 停止监听命令
+2025-05-24 00:01:25,725 - src.voice_command.command_executor - INFO - 停止监听命令
+2025-05-24 00:01:26,028 - src.voice_command.command_executor - INFO - 停止监听命令
+2025-05-24 00:55:06,392 - src.voice_command.command_dispatcher - INFO - 已加载命令配置: config/voice_command/commands.yaml
+2025-05-24 00:55:06,397 - src.voice_command.command_dispatcher - INFO - 已加载命令: create_file
+2025-05-24 00:55:06,397 - src.voice_command.command_dispatcher - INFO - 已加载命令: list_files
+2025-05-24 00:55:06,397 - src.voice_command.command_dispatcher - INFO - 已加载命令: delete_file
+2025-05-24 00:55:06,397 - src.voice_command.command_dispatcher - INFO - 已加载命令: system_info
+2025-05-24 00:55:06,397 - src.voice_command.command_dispatcher - INFO - 已加载命令: run_shell
+2025-05-24 00:55:06,397 - src.voice_command.command_dispatcher - INFO - 已加载命令: current_directory
+2025-05-24 00:57:41,113 - src.voice_command.command_dispatcher - INFO - 已加载命令配置: config/voice_command/commands.yaml
+2025-05-24 00:57:41,114 - src.voice_command.command_dispatcher - INFO - 已加载命令: create_file
+2025-05-24 00:57:41,114 - src.voice_command.command_dispatcher - INFO - 已加载命令: list_files
+2025-05-24 00:57:41,114 - src.voice_command.command_dispatcher - INFO - 已加载命令: delete_file
+2025-05-24 00:57:41,114 - src.voice_command.command_dispatcher - INFO - 已加载命令: system_info
+2025-05-24 00:57:41,114 - src.voice_command.command_dispatcher - INFO - 已加载命令: run_shell
+2025-05-24 00:57:41,114 - src.voice_command.command_dispatcher - INFO - 已加载命令: current_directory
+2025-05-24 00:58:39,087 - src.voice_command.command_dispatcher - INFO - 已加载命令配置: config/voice_command/commands.yaml
+2025-05-24 00:58:39,089 - src.voice_command.command_dispatcher - INFO - 已加载命令: create_file
+2025-05-24 00:58:39,089 - src.voice_command.command_dispatcher - INFO - 已加载命令: list_files
+2025-05-24 00:58:39,089 - src.voice_command.command_dispatcher - INFO - 已加载命令: delete_file
+2025-05-24 00:58:39,089 - src.voice_command.command_dispatcher - INFO - 已加载命令: system_info
+2025-05-24 00:58:39,089 - src.voice_command.command_dispatcher - INFO - 已加载命令: run_shell
+2025-05-24 00:58:39,089 - src.voice_command.command_dispatcher - INFO - 已加载命令: current_directory
+2025-05-24 00:58:50,505 - src.voice_command.command_executor - INFO - 停止监听命令
+2025-05-24 00:58:50,574 - src.voice_command.command_executor - INFO - 停止监听命令
+2025-05-24 00:58:51,624 - src.voice_command.command_executor - INFO - 停止监听命令
+2025-05-24 00:58:52,775 - src.voice_command.command_executor - INFO - 停止监听命令
+2025-05-24 00:58:54,063 - src.voice_command.command_executor - INFO - 停止监听命令
+2025-05-24 00:58:54,176 - src.voice_command.command_executor - INFO - 停止监听命令
+2025-05-24 00:58:55,210 - __main__ - ERROR - 监听过程中出错: main thread is not in main loop
+Traceback (most recent call last):
+  File "/Users/rain/CursorProject/finance2media/examples/gui_voice_command.py", line 310, in _listening_worker
+    self.root.after(0, lambda: self._update_recognition_text("等待输入..."))
+  File "/Users/rain/miniconda3/envs/f2m_py39/lib/python3.9/tkinter/__init__.py", line 821, in after
+    name = self._register(callit)
+  File "/Users/rain/miniconda3/envs/f2m_py39/lib/python3.9/tkinter/__init__.py", line 1528, in _register
+    self.tk.createcommand(name, f)
+RuntimeError: main thread is not in main loop
+2025-05-24 00:59:02,576 - src.voice_command.command_dispatcher - INFO - 已加载命令配置: config/voice_command/commands.yaml
+2025-05-24 00:59:02,578 - src.voice_command.command_dispatcher - INFO - 已加载命令: create_file
+2025-05-24 00:59:02,578 - src.voice_command.command_dispatcher - INFO - 已加载命令: list_files
+2025-05-24 00:59:02,578 - src.voice_command.command_dispatcher - INFO - 已加载命令: delete_file
+2025-05-24 00:59:02,578 - src.voice_command.command_dispatcher - INFO - 已加载命令: system_info
+2025-05-24 00:59:02,578 - src.voice_command.command_dispatcher - INFO - 已加载命令: run_shell
+2025-05-24 00:59:02,578 - src.voice_command.command_dispatcher - INFO - 已加载命令: current_directory
+2025-05-24 00:59:45,159 - src.voice_command.command_executor - INFO - 停止监听命令
+2025-05-24 00:59:45,252 - src.voice_command.command_executor - INFO - 停止监听命令
+2025-05-24 00:59:46,280 - __main__ - ERROR - 监听过程中出错: main thread is not in main loop
+Traceback (most recent call last):
+  File "/Users/rain/CursorProject/finance2media/examples/gui_voice_command.py", line 310, in _listening_worker
+    self.root.after(0, lambda: self._update_recognition_text("等待输入..."))
+  File "/Users/rain/miniconda3/envs/f2m/lib/python3.11/tkinter/__init__.py", line 872, in after
+    name = self._register(callit)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/rain/miniconda3/envs/f2m/lib/python3.11/tkinter/__init__.py", line 1603, in _register
+    self.tk.createcommand(name, f)
+RuntimeError: main thread is not in main loop
+2025-05-24 01:00:14,748 - src.voice_command.command_dispatcher - INFO - 已加载命令配置: config/voice_command/commands.yaml
+2025-05-24 01:00:14,750 - src.voice_command.command_dispatcher - INFO - 已加载命令: create_file
+2025-05-24 01:00:14,750 - src.voice_command.command_dispatcher - INFO - 已加载命令: list_files
+2025-05-24 01:00:14,750 - src.voice_command.command_dispatcher - INFO - 已加载命令: delete_file
+2025-05-24 01:00:14,750 - src.voice_command.command_dispatcher - INFO - 已加载命令: system_info
+2025-05-24 01:00:14,750 - src.voice_command.command_dispatcher - INFO - 已加载命令: run_shell
+2025-05-24 01:00:14,750 - src.voice_command.command_dispatcher - INFO - 已加载命令: current_directory
+2025-05-24 01:00:54,895 - src.voice_command.command_executor - INFO - 停止监听命令
+2025-05-24 01:00:55,061 - src.voice_command.command_executor - INFO - 停止监听命令
+2025-05-24 01:01:54,178 - src.voice_command.command_dispatcher - INFO - 已加载命令配置: config/voice_command/commands.yaml
+2025-05-24 01:01:54,179 - src.voice_command.command_dispatcher - INFO - 已加载命令: create_file
+2025-05-24 01:01:54,179 - src.voice_command.command_dispatcher - INFO - 已加载命令: list_files
+2025-05-24 01:01:54,179 - src.voice_command.command_dispatcher - INFO - 已加载命令: delete_file
+2025-05-24 01:01:54,179 - src.voice_command.command_dispatcher - INFO - 已加载命令: system_info
+2025-05-24 01:01:54,179 - src.voice_command.command_dispatcher - INFO - 已加载命令: run_shell
+2025-05-24 01:01:54,179 - src.voice_command.command_dispatcher - INFO - 已加载命令: current_directory
